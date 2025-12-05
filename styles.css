@@ -1,0 +1,467 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-dark: #1B3C53;
+    --primary: #234C6A;
+    --secondary: #456882;
+    --background: #E3E3E3;
+    --card-background: #ffffff;
+    --text-primary: #1B3C53;
+    --text-secondary: #456882;
+    --border-color: #d0d0d0;
+    --shadow: 0 2px 4px rgba(27, 60, 83, 0.1);
+    --shadow-lg: 0 4px 8px rgba(27, 60, 83, 0.15);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 1rem;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 1.5rem;
+    background: var(--primary-dark);
+    color: white;
+    border-radius: 0;
+    box-shadow: var(--shadow-lg);
+}
+
+header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    font-weight: 400;
+}
+
+.presupuesto-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.card {
+    background: var(--card-background);
+    border-radius: 0;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+    color: var(--primary-dark);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary-dark);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    background: white;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    border-width: 2px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* Materiales y Mano de Obra */
+.material-form,
+.mano-obra-form {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-row input,
+.form-row select {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 0.95rem;
+    background: white;
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.form-row select:focus {
+    outline: none;
+    border-color: var(--primary);
+    border-width: 2px;
+}
+
+.input-descripcion {
+    grid-column: 1 / -1;
+}
+
+.input-cantidad,
+.input-precio,
+.input-unidad,
+.input-precio-peso,
+.input-precio-kilo {
+    width: 100%;
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+table thead {
+    background: var(--primary-dark);
+}
+
+table th {
+    padding: 0.875rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+table td {
+    padding: 0.875rem 0.75rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+table tbody tr:hover {
+    background: #f5f5f5;
+}
+
+table tfoot {
+    border-top: 2px solid var(--primary-dark);
+    font-weight: 600;
+    background: #f9f9f9;
+}
+
+table tfoot td {
+    padding-top: 1rem;
+    color: var(--primary-dark);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+}
+
+.btn-success {
+    background: var(--primary-dark);
+    color: white;
+    flex: 1;
+}
+
+.btn-success:hover {
+    background: var(--primary);
+}
+
+.btn-danger {
+    background: var(--secondary);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.btn-danger:hover {
+    background: var(--primary);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Resumen Total */
+.total-card {
+    background: white;
+    border: 2px solid var(--primary-dark);
+}
+
+.resumen-total {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.resumen-item:last-child {
+    border-bottom: none;
+}
+
+.total-final {
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--primary-dark);
+    font-size: 1.25rem;
+}
+
+.total-final span {
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+/* Botones de Acción */
+.acciones {
+    position: sticky;
+    bottom: 1rem;
+    z-index: 10;
+}
+
+.botones-accion {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.botones-accion .btn {
+    width: 100%;
+}
+
+/* Mensajes y Alertas */
+.mensaje {
+    padding: 1rem;
+    border-radius: 0;
+    margin-bottom: 1rem;
+    display: none;
+    border-left: 4px solid;
+}
+
+.mensaje.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left-color: #4caf50;
+}
+
+.mensaje.error {
+    background: #ffebee;
+    color: #c62828;
+    border-left-color: #f44336;
+}
+
+.mensaje.show {
+    display: block;
+}
+
+/* Responsive - Tablet */
+@media (min-width: 768px) {
+    body {
+        padding: 2rem;
+    }
+
+    header {
+        padding: 2.5rem 2rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-row {
+        grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto;
+        gap: 0.75rem;
+    }
+
+    .input-descripcion {
+        grid-column: 1;
+    }
+    
+    .input-unidad {
+        grid-column: 3;
+    }
+    
+    .input-precio {
+        grid-column: 4;
+    }
+    
+    .input-precio-peso {
+        grid-column: 4;
+    }
+    
+    .input-precio-kilo {
+        grid-column: 4;
+    }
+
+    table {
+        font-size: 0.95rem;
+    }
+
+    table th,
+    table td {
+        padding: 1rem;
+    }
+
+    .botones-accion {
+        flex-direction: row;
+    }
+
+    .botones-accion .btn {
+        flex: 1;
+    }
+}
+
+/* Responsive - Desktop */
+@media (min-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+        padding: 2rem;
+    }
+
+    .card h2 {
+        font-size: 0.9rem;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+/* Mejoras de accesibilidad */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Estados de carga */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}

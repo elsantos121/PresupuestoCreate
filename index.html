@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Presupuestos</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Generador de Presupuestos</h1>
+            <p class="subtitle">Crea presupuestos profesionales en minutos</p>
+        </header>
+
+        <div class="presupuesto-form">
+            <!-- Información del Presupuesto -->
+            <section class="card">
+                <h2>Información del Presupuesto</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="numero-presupuesto">Número de Presupuesto</label>
+                        <input type="text" id="numero-presupuesto" placeholder="PRES-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" id="fecha" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="validez">Validez (días)</label>
+                        <input type="number" id="validez" value="30" min="1">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="descripcion-importante">Información Importante</label>
+                        <textarea id="descripcion-importante" rows="3" placeholder="Añade información importante sobre el presupuesto..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materiales -->
+            <section class="card">
+                <h2>Materiales</h2>
+                <div class="material-form">
+                    <div class="form-row">
+                        <input type="text" id="material-descripcion" placeholder="Descripción del material" class="input-descripcion">
+                        <input type="number" id="material-cantidad" placeholder="Cant." min="0" step="0.01" class="input-cantidad">
+                        <select id="material-tipo-unidad" class="input-unidad">
+                            <option value="unidad">Unidad</option>
+                            <option value="gramos">Peso (gramos)</option>
+                            <option value="kilos">Peso (kilos)</option>
+                        </select>
+                        <input type="number" id="material-precio" placeholder="Precio unit." min="0" step="0.01" class="input-precio">
+                        <input type="number" id="material-precio-unidad-peso" placeholder="Precio por 100g" min="0" step="0.01" class="input-precio-peso" style="display: none;">
+                        <input type="number" id="material-precio-kilo" placeholder="Precio por kg" min="0" step="0.01" class="input-precio-kilo" style="display: none;">
+                        <button type="button" class="btn btn-primary" id="agregar-material">+</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="tabla-materiales">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Unidad</th>
+                                <th>Precio Unit.</th>
+                                <th>Subtotal</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materiales-tbody">
+                            <!-- Materiales se agregarán aquí -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-right"><strong>Subtotal Materiales:</strong></td>
+                                <td colspan="2"><strong id="subtotal-materiales">€0.00</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Mano de Obra -->
+            <section class="card">
+                <h2>👷 Mano de Obra</h2>
+                <div class="mano-obra-form">
+                    <div class="form-row">
+                        <input type="text" id="mano-obra-descripcion" placeholder="Descripción del trabajo" class="input-descripcion">
+                        <input type="number" id="mano-obra-horas" placeholder="Horas" min="0" step="0.5" class="input-cantidad">
+                        <input type="number" id="mano-obra-precio" placeholder="Precio/hora" min="0" step="0.01" class="input-precio">
+                        <button type="button" class="btn btn-primary" id="agregar-mano-obra">+</button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="tabla-mano-obra">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Horas</th>
+                                <th>Precio/Hora</th>
+                                <th>Subtotal</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mano-obra-tbody">
+                            <!-- Mano de obra se agregará aquí -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-right"><strong>Subtotal Mano de Obra:</strong></td>
+                                <td colspan="2"><strong id="subtotal-mano-obra">€0.00</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Descuentos e Impuestos -->
+            <section class="card">
+                <h2>Descuentos e Impuestos</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="descuento-porcentaje">Descuento (%)</label>
+                        <input type="number" id="descuento-porcentaje" value="0" min="0" max="100" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="descuento-fijo">Descuento Fijo (€)</label>
+                        <input type="number" id="descuento-fijo" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="impuesto-porcentaje">IVA/Impuesto (%)</label>
+                        <input type="number" id="impuesto-porcentaje" value="21" min="0" max="100" step="0.01">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notas -->
+            <section class="card">
+                <h2>Notas y Observaciones</h2>
+                <div class="form-group full-width">
+                    <textarea id="notas" rows="4" placeholder="Agrega notas, condiciones, términos de pago, etc."></textarea>
+                </div>
+            </section>
+
+            <!-- Resumen Total -->
+            <section class="card total-card">
+                <h2>💵 Resumen Total</h2>
+                <div class="resumen-total">
+                    <div class="resumen-item">
+                        <span>Subtotal Materiales:</span>
+                        <span id="resumen-materiales">€0.00</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Subtotal Mano de Obra:</span>
+                        <span id="resumen-mano-obra">€0.00</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Subtotal:</span>
+                        <span id="resumen-subtotal">€0.00</span>
+                    </div>
+                    <div class="resumen-item" id="descuento-item" style="display: none;">
+                        <span>Descuento:</span>
+                        <span id="resumen-descuento">-€0.00</span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>IVA/Impuesto (<span id="impuesto-label">21</span>%):</span>
+                        <span id="resumen-impuesto">€0.00</span>
+                    </div>
+                    <div class="resumen-item total-final">
+                        <span><strong>TOTAL:</strong></span>
+                        <span id="resumen-total"><strong>€0.00</strong></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botones de Acción -->
+            <section class="card acciones">
+                <div class="botones-accion">
+                    <button type="button" class="btn btn-secondary" id="limpiar-presupuesto">Limpiar</button>
+                    <button type="button" class="btn btn-success" id="exportar-pdf">Exportar PDF</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
